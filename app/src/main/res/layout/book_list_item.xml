@@ -15,6 +15,7 @@
         android:paddingLeft="0dp"
         android:paddingTop="8dp"
         android:text="TItle"
+        android:textColor="@android:color/holo_green_dark"
         android:textSize="24sp"
         android:textStyle="bold" />
 

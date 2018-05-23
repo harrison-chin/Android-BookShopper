@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                 e.printStackTrace();
                                 Log.i(TAG, "onError : " + e.getMessage());
                             }
-                            fragment.adapter.notifyDataSetChanged();
+                            fragment.reloadListView();
                         }
                         Log.i(TAG, "Books count: " + books.size());
                     }

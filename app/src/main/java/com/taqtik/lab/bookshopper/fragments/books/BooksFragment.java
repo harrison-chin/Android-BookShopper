@@ -1,12 +1,15 @@
 package com.taqtik.lab.bookshopper.fragments.books;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.taqtik.lab.bookshopper.R;
 import com.taqtik.lab.bookshopper.adapters.books.BooksRecyclerAdapter;
@@ -18,7 +21,8 @@ public class BooksFragment extends Fragment {
     private String TAG = "MainActivity.Meteor";
 
     private ListView listView;
-    public BooksRecyclerAdapter adapter = null;
+    private ProgressBar mProgressBar;
+    private BooksRecyclerAdapter adapter = null;
 
     private ArrayList<Book> books = new ArrayList<Book>();
 
@@ -42,6 +46,7 @@ public class BooksFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_books, container, false);
 
         this.listView = (ListView)rootView.findViewById(R.id.list_view);
+        this.mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
         this.adapter= new BooksRecyclerAdapter(this.books, getContext());
 
@@ -54,5 +59,14 @@ public class BooksFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    public void reloadListView() {
+        if (this.adapter != null) {
+            this.adapter.notifyDataSetChanged();
+        }
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 }
