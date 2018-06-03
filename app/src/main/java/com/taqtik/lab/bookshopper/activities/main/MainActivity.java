@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                                 for (int i = 0; i < reader.length(); i++) {
                                     JSONObject bookJSON = (JSONObject) reader.get(i);
                                     Book book  = new Book();
+                                    book.price = "20";
                                     if (bookJSON.has("_id")) {
                                         book.id = bookJSON.getString("_id");
                                     }

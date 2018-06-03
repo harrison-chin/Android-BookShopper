@@ -54,6 +54,7 @@ public class Book implements Parcelable {
     public Book(Parcel in) {
         this.id = in.readString();
         this.title = in.readString();
+        this.author = new Author();
         this.author.id = in.readString();
         this.author.family_name = in.readString();
         this.author.first_name = in.readString();

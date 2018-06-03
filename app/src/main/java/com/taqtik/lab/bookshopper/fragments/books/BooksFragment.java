@@ -1,9 +1,12 @@
 package com.taqtik.lab.bookshopper.fragments.books;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +15,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.taqtik.lab.bookshopper.R;
+import com.taqtik.lab.bookshopper.activities.books.BookDetailsActivity;
 import com.taqtik.lab.bookshopper.adapters.books.BooksRecyclerAdapter;
 import com.taqtik.lab.bookshopper.models.Book;
+import com.taqtik.lab.bookshopper.utils.TransitionHelper;
 
 import java.util.ArrayList;
 
@@ -54,8 +59,8 @@ public class BooksFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Book item = books.get(position);
-                // SHow Book details
+            Book book = books.get(position);
+            showBookDetailsActivity(book);
             }
         });
         return rootView;
@@ -68,5 +73,15 @@ public class BooksFragment extends Fragment {
         if (mProgressBar != null) {
             mProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    private void showBookDetailsActivity(Book book) {
+        Intent bookDetailsIntent = new Intent(this.getContext(), BookDetailsActivity.class);
+        bookDetailsIntent.putExtra("book", book);
+
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this.getActivity(), true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this.getActivity(), pairs);
+
+        this.getActivity().startActivity(bookDetailsIntent, transitionActivityOptions.toBundle());
     }
 }

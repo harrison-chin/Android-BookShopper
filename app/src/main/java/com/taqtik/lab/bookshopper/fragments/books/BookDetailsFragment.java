@@ -1,63 +1,42 @@
 package com.taqtik.lab.bookshopper.fragments.books;
 
+import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.taqtik.lab.bookshopper.R;
+import com.taqtik.lab.bookshopper.activities.books.BookDetailsActivity;
+import com.taqtik.lab.bookshopper.models.Book;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link BookDetailsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link BookDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BookDetailsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private String TAG = "MainActivity.Meteor";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    private TextView title_textView;
+    private TextView author_textView;
+    private TextView description_textView;
+    private Button checkout_button;
+    private Book book;
+    public Context mContext;
 
     public BookDetailsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BookDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BookDetailsFragment newInstance(String param1, String param2) {
-        BookDetailsFragment fragment = new BookDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+        this.mContext = this.getContext();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            this.book = bundle.getParcelable("book");
         }
     }
 
@@ -65,45 +44,29 @@ public class BookDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_details, container, false);
-    }
+        View rootView =  inflater.inflate(R.layout.fragment_book_details, container, false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        this.title_textView = (TextView)rootView.findViewById(R.id.title_textView);
+        this.author_textView = (TextView)rootView.findViewById(R.id.author_textView);
+        this.description_textView = (TextView)rootView.findViewById(R.id.description_textView);
+        this.checkout_button = (Button) rootView.findViewById(R.id.checkout_button);
+        this.checkout_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                BookDetailsActivity bookDetailsActivity = (BookDetailsActivity)getActivity();
+                bookDetailsActivity.showBraintreePayActivity();
+            }
+        });
+
+        if (this.book != null) {
+            this.title_textView.setText(this.book.title);
+            String authorText = "Author: " + (this.book.author.first_name + " " + this.book.author.family_name);
+            this.author_textView.setText(authorText);
+            String descriptionText = "Description:\nBook ID: " + this.book.id;
+            this.description_textView.setText(descriptionText);
         }
+
+        return rootView;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
