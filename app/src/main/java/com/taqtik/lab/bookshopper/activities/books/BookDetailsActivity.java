@@ -45,7 +45,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     private String TAG = "MainActivity.Meteor";
 
     public static final int DROP_IN_REQUEST = 1;
-    private String clientTokenOrTokenizationKey = "{key}";
+    private String clientTokenOrTokenizationKey = "sandbox_jzgw4n4x_z68vm2n954m3r2yz";
     private String firstName = "John";
     private String lastName = "Doe";
     private String email = "John.Doe@test.com";
@@ -91,11 +91,13 @@ public class BookDetailsActivity extends AppCompatActivity {
                 Log.i(TAG, "paymentMethodNonce: " + nonce);
                 this.sendRequestPaymentToServer(nonce, this.book.price, this.firstName, this.lastName, this.email);
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                // canceled
+                String message = "Transaction Cancelled";
+                showMessage("Checkout Status", message);
             } else {
                 // an error occurred, checked the returned exception
                 Exception exception = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
-                Log.i(TAG, "error: " + exception.getMessage());
+                String message = exception.getMessage();
+                showMessage("Checkout Error", message);
             }
         }
     }
@@ -120,7 +122,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     String message = "Successfully charged. Thanks for shopping the books!";
-                    showSuccessMessage(message);
+                    showMessage("Checkout Status", message);
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
             }, new Response.ErrorListener() {
@@ -162,10 +164,10 @@ public class BookDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void showSuccessMessage(String message) {
+    private void showMessage(String title, String message) {
         AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
         dlgAlert.setMessage(message);
-        dlgAlert.setTitle("Checkout");
+        dlgAlert.setTitle(title);
         dlgAlert.setCancelable(true);
         dlgAlert.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
