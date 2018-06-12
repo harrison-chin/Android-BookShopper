@@ -7,6 +7,8 @@ public class Book implements Parcelable {
     public String id;
     public String title;
     public Author author;
+    public String summary;
+    public String isbn;
     public String price;
 
     private String TAG = "MainActivity";
@@ -15,10 +17,12 @@ public class Book implements Parcelable {
 
     }
 
-    public Book(String id, String title, Author author, String price) {
+    public Book(String id, String title, Author author, String summary, String isbn, String price) {
         this.id = id;
         this.title = title;
         this.author = author;
+        this.summary = summary;
+        this.isbn = isbn;
         this.price = price;
     }
 
@@ -35,6 +39,8 @@ public class Book implements Parcelable {
         dest.writeString(this.author.family_name);
         dest.writeString(this.author.first_name);
         dest.writeString(this.author.date_of_birth);
+        dest.writeString(this.summary);
+        dest.writeString(this.isbn);
         dest.writeString(this.price);
     }
 
@@ -59,6 +65,8 @@ public class Book implements Parcelable {
         this.author.family_name = in.readString();
         this.author.first_name = in.readString();
         this.author.date_of_birth = in.readString();
+        this.summary = in.readString();
+        this.isbn = in.readString();
         this.price = in.readString();
     }
 }

@@ -28,8 +28,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.main.MainActivity" />
         </activity>
-
-        <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+        <activity
+            android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -37,6 +37,14 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="com.taqtik.lab.bookshopper.braintree" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.books.BookOrderActivity"
+            android:label="Order Book"
+            android:parentActivityName=".activities.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.main.MainActivity" />
         </activity>
     </application>
 

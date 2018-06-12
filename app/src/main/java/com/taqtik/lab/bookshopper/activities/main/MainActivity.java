@@ -88,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                         book.author = author;
                                     }
+                                    if (bookJSON.has("summary")) {
+                                        book.summary = bookJSON.getString("summary");
+                                    }
+                                    if (bookJSON.has("isbn")) {
+                                        book.isbn = bookJSON.getString("isbn");
+                                    }
                                     if (bookJSON.has("price")) {
                                         book.price = bookJSON.getString("price");
                                     }

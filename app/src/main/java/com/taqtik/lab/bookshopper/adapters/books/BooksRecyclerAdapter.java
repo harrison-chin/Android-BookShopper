@@ -41,6 +41,7 @@ public class BooksRecyclerAdapter extends ArrayAdapter<Book> {
             convertView = inflater.inflate(R.layout.book_list_item, parent, false);
             viewHolder.itemTitle = (TextView) convertView.findViewById(R.id.title_textView);
             viewHolder.itemAuthor = (TextView) convertView.findViewById(R.id.author_textView);
+            viewHolder.itemPrice = (TextView) convertView.findViewById(R.id.price_textView);
 
             result = convertView;
             convertView.setTag(viewHolder);
@@ -52,6 +53,8 @@ public class BooksRecyclerAdapter extends ArrayAdapter<Book> {
         viewHolder.itemTitle.setText(item.title);
         String authorText = "Author: " + item.author.first_name +  " " + item.author.family_name;
         viewHolder.itemAuthor.setText(authorText);
+        String priceText = "Price: $" + item.price;
+        viewHolder.itemPrice.setText(priceText);
         return result;
     }
 
@@ -71,5 +74,6 @@ public class BooksRecyclerAdapter extends ArrayAdapter<Book> {
     private static class ViewHolder {
         public TextView itemTitle;
         public TextView itemAuthor;
+        public TextView itemPrice;
     }
 }

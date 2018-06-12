@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.taqtik.lab.bookshopper.R;
@@ -18,8 +19,11 @@ import com.taqtik.lab.bookshopper.models.Book;
 public class BookDetailsFragment extends Fragment {
     private String TAG = "MainActivity.Meteor";
 
+    private ProgressBar mProgressBar;
     private TextView title_textView;
     private TextView author_textView;
+    private TextView isbn_textView;
+    private TextView price_textView;
     private TextView description_textView;
     private Button checkout_button;
     private Book book;
@@ -46,14 +50,17 @@ public class BookDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_book_details, container, false);
 
+        this.mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
         this.title_textView = (TextView)rootView.findViewById(R.id.title_textView);
         this.author_textView = (TextView)rootView.findViewById(R.id.author_textView);
+        this.isbn_textView = (TextView)rootView.findViewById(R.id.isbn_textView);
+        this.price_textView = (TextView)rootView.findViewById(R.id.price_textView);
         this.description_textView = (TextView)rootView.findViewById(R.id.description_textView);
         this.checkout_button = (Button) rootView.findViewById(R.id.checkout_button);
         this.checkout_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                BookDetailsActivity bookDetailsActivity = (BookDetailsActivity)getActivity();
-                bookDetailsActivity.showBraintreePayActivity();
+            BookDetailsActivity bookDetailsActivity = (BookDetailsActivity)getActivity();
+            bookDetailsActivity.showBraintreePayActivity();
             }
         });
 
@@ -61,12 +68,21 @@ public class BookDetailsFragment extends Fragment {
             this.title_textView.setText(this.book.title);
             String authorText = "Author: " + (this.book.author.first_name + " " + this.book.author.family_name);
             this.author_textView.setText(authorText);
-            String descriptionText = "Description:\nBook ID: " + this.book.id;
+            String isbnText = "ISBN: " + this.book.isbn;
+            this.isbn_textView.setText(isbnText);
+            String priceText = "Price: $" + this.book.price;
+            this.price_textView.setText(priceText);
+            String descriptionText = "Summary:\n" + this.book.summary + "\n" + "(ID: " + this.book.id + ")";
             this.description_textView.setText(descriptionText);
         }
+        this.showProgressBar(false);
 
         return rootView;
     }
 
-
+    public void showProgressBar(boolean show) {
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(show ? View.VISIBLE: View.INVISIBLE);
+        }
+    }
 }
