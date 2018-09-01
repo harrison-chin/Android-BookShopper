@@ -18,7 +18,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     private String TAG = "MainActivity.Meteor";
 
     public static final int DROP_IN_REQUEST = 1;
-    private String clientTokenOrTokenizationKey = "";
+    private String clientTokenOrTokenizationKey = "sandbox_jzgw4n4x_z68vm2n954m3r2yz";
 
     private Book book;
 
